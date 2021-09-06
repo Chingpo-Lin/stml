@@ -1,0 +1,130 @@
+// sfml_01.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
+//
+
+#include <iostream>
+#include <SFML\Graphics.hpp>
+#include <SFML\Audio.hpp>
+
+int main()
+{
+    // first param and second are the size and name of window
+    // resize is enable resize, close is enable the close option, but if we don't write param three, we still have the function
+    sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Window"); //, sf::Style::Resize | sf::Style::Close);
+    
+    // window.setVerticalSyncEnabled(true); set refresh rate to same as monitor 
+    window.setFramerateLimit(60); // same as above, when monitor is 60
+
+    std::cout << "Game started" << std::endl;
+
+    sf::Texture box_texture;
+    if (!box_texture.loadFromFile("data/box.png")) {
+        std::cout << "fail loading" << std::endl;
+    }
+
+    box_texture.setSmooth(true);
+
+    sf::Font font;
+    if (!font.loadFromFile("data/font1.otf")) {
+        // code when fail
+    }
+
+    sf::RectangleShape rectangle(sf::Vector2f(500, 500));
+
+    rectangle.setOrigin(50, 25); // position will locate based on it origin
+    rectangle.setPosition(400, 300);
+    //rectangle.setFillColor(sf::Color(0, 255, 0)); // set the color of the shape to green
+    rectangle.setTexture(&box_texture);
+
+    sf::CircleShape circle(200, 3); // 3 represents san jiao xing, and 8 is ba bian xing
+    circle.setRadius(50);
+
+    circle.setOutlineThickness(10);
+    circle.setOutlineColor(sf::Color(0, 0, 255));
+
+    sf::Sprite box;
+    box.setTexture(box_texture);
+    box.setScale(0.5f, 0.5f);
+
+    // Text object
+    sf::Text text;
+    text.setFont(font);
+    text.setString("stupid angela");
+    text.setPosition(250, 0);
+    text.setCharacterSize(40);
+    text.setFillColor(sf::Color(255, 0, 0));
+    text.setStyle(sf::Text::Italic);
+
+    // sound
+    sf::SoundBuffer ball_buffer;
+    if (ball_buffer.loadFromFile("data/ball.ogg") == false) {
+        // code when fail
+        std::cout << "fail" << std::endl;
+    }
+
+    sf::Sound ball_sound;
+    ball_sound.setBuffer(ball_buffer);
+
+    ball_sound.play();
+    // ball_sound.setVolume(100);
+    ball_sound.setPitch(2.0f);
+    // ball_sound.setLoop(true);
+
+    sf::Music music; 
+    if (music.openFromFile("data/music.wav") == false) {
+        // code when fail
+        std::cout << "fail" << std::endl;
+    }
+
+    music.play();
+    music.setVolume(5);
+    music.setPitch(1.5f);
+    music.setLoop(true);
+    // music.setPlayingOffset(sf::seconds(5));
+
+    while (window.isOpen()) 
+    {
+        bool up_key = false;
+        // event part of the main game loop
+        sf::Event event;
+        while (window.pollEvent(event)) 
+        {
+            // close the window when click X
+            if (event.type == sf::Event::Closed) 
+            {
+                window.close();
+            }
+
+            if (event.type == sf::Event::KeyPressed) 
+            {
+                if (event.key.code == sf::Keyboard::Up) 
+                {
+                    up_key = true;
+                    // std::cout << event.key.control << std::endl; // if we press control + up
+                }
+            }
+        }
+        
+        // Logic handling
+        rectangle.move(0.2f, 0); // will continue move because while loop
+        rectangle.rotate(1.0f); // clockwise rotate with speed 1.0f 
+        circle.move(0.5f, 0.5f);
+        circle.rotate(1.0f);
+        text.move(0, 1);
+        /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        {
+            std::cout << "Up is held down" << std::endl;
+        }
+        std::cout << sf::Mouse::getPosition().x << std::endl;*/
+
+        // Rendering part of the main game loop
+        //window.clear(sf::Color(255, 0, 0));
+        window.clear();
+        // Draw things
+        window.draw(rectangle);
+        window.draw(circle);
+        window.draw(box);
+        window.draw(text);
+        window.display(); // enable resize
+    }
+    return 0;
+}

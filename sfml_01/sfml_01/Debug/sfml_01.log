@@ -1,0 +1,6 @@
+﻿  sfml_01.cpp
+C:\Users\admin\Desktop\cppgame\sfml_01\sfml_01\sfml_01.cpp(146,21): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+C:\Users\admin\Desktop\cppgame\sfml_01\sfml_01\sfml_01.cpp(168,21): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+C:\Users\admin\Desktop\cppgame\sfml_01\sfml_01\sfml_01.cpp(171,34): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+C:\Users\admin\Desktop\cppgame\sfml_01\sfml_01\sfml_01.cpp(171,19): warning C4244: “参数”: 从“int”转换到“float”，可能丢失数据
+  sfml_01.vcxproj -> C:\Users\admin\Desktop\cppgame\sfml_01\Debug\sfml_01.exe
